@@ -163,3 +163,93 @@ ul{
     }
 
 }
+
+
+.visible{
+display: block;
+}
+.hidden{
+display: none;
+}
+#product-slider{
+background-color: #fff;
+}
+.product-box{
+background-color: #f1f1f1;
+text-align: center;
+}
+.product-desc{
+font-weight: bold;
+padding: 10px 0px;
+}
+.product-desc h4{
+margin: 0;
+color: #446AAF;
+font-size: 16px;
+}
+.product-desc p{
+color: #3C3F39;
+margin: 10px 0px 8px;
+}
+.product-desc button{
+padding: 9px 15px;
+border-radius: 3px;
+border: 1px solid #c1c1c1;
+font-weight: bold;
+color: #2868AF;
+background: linear-gradient(#FAFDFF, #E8E8E8);
+background: -moz-linear-gradient(#FAFDFF, #E8E8E8);
+background: -webkit-linear-gradient(#FAFDFF, #E8E8E8);
+cursor: pointer;
+font-family: 'Raleway', sans-serif;
+}
+.jscarousal-horizontal{
+width: 70%;
+overflow: hidden;
+height: 280px;
+padding: 30px 15px;
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+}
+.jscarousal-horizontal-back, .jscarousal-horizontal-forward{
+float: left;
+width: 23px;
+position: relative;
+top: 50px;
+cursor: pointer;
+color: #5D5D5D;
+font-size: 22px;
+}
+.jscarousal-horizontal-forward{
+float: right;
+}
+.jscarousal-horizontal-back:before, .jscarousal-horizontal-forward:before{
+font-family: FontAwesome;
+}
+.jscarousal-horizontal-back:before{
+content: "\f053";
+}
+.jscarousal-horizontal-forward:before{
+content: "\f054";
+}
+.jscarousal-contents-horizontal{
+width: calc(100% - 50px);
+height: 100%;
+float: left;
+position: relative;
+overflow: hidden;
+}
+.jscarousal-contents-horizontal > .visible{
+position: absolute;
+width: 100%;
+}
+.jscarousal-contents-horizontal > .visible > .product-box{
+float: left;
+margin: 0px 1%;
+width: 18%;
+}
+.jscarousal-contents-horizontal img{
+width: 100%;
+}
