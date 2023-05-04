@@ -8,6 +8,34 @@ for (var i = 0; i < btns.length; i++) {
     btns[i].addEventListener('click', function() {addToCart(this);});
 }
 
+function toWhatsAppMarkdown(text) {
+    let result = text
+      .replace(/_/g, "\\_") // escape underscores
+      .replace(/\*/g, "\\*") // escape asterisks
+      .replace(/~/g, "\\~") // escape tildes
+      .replace(/`/g, "\\`") // escape backticks
+      .replace(/\|/g, "\\|") // escape pipes
+      .replace(/\n/g, "%0A"); // replace newlines with %0A
+    return result;
+  }
+  
+
+  
+  let btnCheckout = document.getElementById("checkout");
+  btnCheckout.addEventListener("click", function() {
+    let mensaje = "*Muscle Factory Online Store - Lista de Productos*";
+        mensaje +=  replaceTags(document.getElementById("carttable").innerHTML);
+        mensaje +=   "\nCANTIDAD:"+ document.getElementById("itemsquantity").innerHTML;
+        mensaje +=  "/TOTAL:"+document.getElementById("total").innerHTML;
+        mensaje +=  "\nEntrega Gratis 24/48 horas";
+    let mensajeMarkdown = toWhatsAppMarkdown(mensaje);
+    let url = "https://wa.me/+50670764648?text=" + encodeURIComponent(mensajeMarkdown);
+    window.open(url, "_blank");
+  });
+  
+  function replaceTags(str) {
+    return str.replace(/<tr>/g, '\n').replace(/<td>/g, '-').replace(/<\/tr>|<\/td>/g, '');
+  }
 /* ADD TO CART functions */
 
 function addToCart(elem) {
@@ -18,15 +46,9 @@ function addToCart(elem) {
     var cart = [];
      var stringCart;
     //cycles siblings for product info near the add button
-    while(elem = elem.previousSibling) {
-        if (elem.nodeType === 3) continue; // text node
-        if(elem.className == "price"){
-            getprice = elem.innerText;
-        }
-        if (elem.className == "productname") {
-            getproductName = elem.innerText;
-        }
-        sibs.push(elem);
+    if(elem){
+        getprice =    elem.parentNode.parentNode.parentElement.parentNode.parentElement.getElementsByClassName("price")[0].getInnerHTML();
+        getproductName = elem.parentNode.parentNode.parentElement.parentNode.parentElement.getElementsByClassName("productname")[0].getInnerHTML();
     }
     //create product object
     var product = {
@@ -60,6 +82,44 @@ function addToCart(elem) {
         updateCartTotal();
     }
 }
+
+function toWhatsAppMarkdown(text) {
+    // Negrita
+    text = text.replace(/\*\*([^*]+)\*\*/g, (_, p1) => {
+      return '*' + p1.trim() + '*';
+    });
+  
+    // Cursiva
+    text = text.replace(/(^|[^_])_([^_]+)_([^_]|$)/g, (_, p1, p2, p3) => {
+      return p1 + '*' + p2.trim() + '*' + p3;
+    });
+  
+    // Tachado
+    text = text.replace(/~~([^~]+)~~/g, (_, p1) => {
+      return '~' + p1.trim() + '~';
+    });
+  
+    // Enlaces
+    text = text.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, (_, p1, p2) => {
+      return p1.trim() + ' (' + p2.trim() + ')';
+    });
+  
+    // Imágenes
+    text = text.replace(/!\[([^\]]+)\]\(([^\)]+)\)/g, (_, p1, p2) => {
+      return '[Imagen: ' + p1.trim() + '](' + p2.trim() + ')';
+    });
+  
+    // Listas
+    text = text.replace(/^- (.*)$/gm, (_, p1) => {
+      return '• ' + p1.trim() + '\n';
+    });
+  
+    // Retornar texto convertido a Markdown
+    return text;
+  }
+
+  
+  
 /* Calculate Cart Total */
 function updateCartTotal(){
     //init
@@ -78,16 +138,20 @@ function updateCartTotal(){
             //convert each JSON product in array back into object
             var x = JSON.parse(cart[i]);
             //get property value of price
-            price = parseFloat(x.price.split('$')[1]);
+            if(!x.price){
+
+                break;
+            }
+            price = x.price;
             productname = x.productname;
             //add price to total
-            carttable += "<tr><td>" + productname + "</td><td>$" + price.toFixed(2) + "</td></tr>";
-            total += price;
+            carttable += "<tr><td>" + productname + "</td><td>" + price + "</td></tr>";
+            total = parseInt(price) +parseInt(total);
         }
         
     }
     //update total on website HTML
-    document.getElementById("total").innerHTML = total.toFixed(2);
+    document.getElementById("total").innerHTML = total;
     //insert saved products to cart table
     document.getElementById("carttable").innerHTML = carttable;
     //update items in cart on website HTML

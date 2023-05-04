@@ -14,10 +14,6 @@
     box-sizing: border-box;
 }
 
-body{
-    background-color: var(--white);
-    font-family: "Poppins", sans-serif;
-}
 
 a{
     text-decoration: none;
@@ -36,12 +32,22 @@ ul{
     width: 100%;
 }
 
+.body{
+    background-image: url(background.jpg);
+    background-repeat: repeat-y;
+    background-position-x: center;
+    background-color: black;
+    font-family: "Poppins", sans-serif;
+    color: #f2f2f2;
+}
+
 /* Logo */
 .logo{
     display: inline-block;
     color: var(--white);
     font-size: 60px;
     margin-left: 10px;
+    border-radius: 5px;
 
 }
 
@@ -180,7 +186,6 @@ ul{
   margin-right:1em; 
   border-radius:5px;
   display: inline-block;
-  text-align: center;
 }
 .cart-container {
   border:1px solid #E0E4CC;
