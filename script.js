@@ -5,6 +5,7 @@ updateCartTotal();
 document.getElementById("emptycart").addEventListener("click", emptyCart);
 var btns = document.getElementsByClassName('addtocart');
 for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('touchstart', function() {addToCart(this);});
     btns[i].addEventListener('click', function() {addToCart(this);});
 }
 
